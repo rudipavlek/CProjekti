@@ -4,23 +4,131 @@
     ViewData["Title"] = "Create Blog Post";
 }
 
-<div class="container mt-4">
-    <h1>Create New Post</h1>
+<head>
+    <style>
+        /* General container and form styling */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+        }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .form-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Form input and textarea styling */
+        .form-group label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+            .form-control:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+            }
+
+        /* Buttons styling */
+        .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #218838;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        /* Back button space */
+        .btn-back {
+            margin-left: 10px;
+        }
+
+        /* Margin between form elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the text area */
+        textarea.form-control {
+            resize: vertical;
+        }
+    </style>
+</head>
+
+<div class="container">
     <form asp-action="Create" method="post">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value="@Model.title" required />
-        </div>
+        <div class="form-card">
+            <h1>Create New Post</h1>
 
-        <div class="form-group mt-3">
-            <label for="content">Content</label>
-            <textarea class="form-control" id="content" name="content" rows="6" required>@Model.content</textarea>
-        </div>
+            <!-- Title Input -->
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="@Model.title" required placeholder="Enter the post title" />
+            </div>
 
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Create Post</button>
-            <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary ml-2">Back to Posts</a>
+            <!-- Content Textarea -->
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea class="form-control" id="content" name="content" rows="8" required placeholder="Write your post content here">@Model.content</textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="form-group d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Create Post</button>
+                <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary btn-back">Back to Posts</a>
+            </div>
         </div>
     </form>
 </div>

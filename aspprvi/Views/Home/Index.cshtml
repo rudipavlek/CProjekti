@@ -62,7 +62,6 @@
                 background-color: #5a6268;
             }
 
-        /* Dodaj padding i poravnavanje */
         .mt-4 {
             margin-top: 30px;
         }
@@ -74,10 +73,9 @@
         <!-- Provjeri da li je korisnik prijavljen -->
         @if (ViewBag.UserId != null)
         {
-            <p>Trenutno ste prijavljeni kao korisnik s ID-jem: @ViewBag.UserId</p>
+            <p>Trenutno ste prijavljeni kao: @ViewBag.username</p>
 
-            <!-- Gumb za odjavu -->
-            <a href="@Url.Action("Logout", "Login")" class="btn btn-danger btn-lg mt-3">Odjava</a>
+            
         }
         else
         {
@@ -91,6 +89,8 @@
             <a href="@Url.Action("Index", "Admin")" class="btn btn-primary btn-lg mx-2">Admin stranica</a>
             <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary btn-lg mx-2">Blog stranica</a>
         </div>
+        <!-- Gumb za odjavu -->
+        <a href="@Url.Action("Logout", "Login")" class="btn btn-danger btn-lg mt-3">Odjava</a>
     </div>
 
     <!-- Bootstrap JS -->

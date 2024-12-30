@@ -1,10 +1,12 @@
 ﻿using aspprvi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace aspprvi.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -25,6 +27,8 @@ namespace aspprvi.Controllers
             if (!string.IsNullOrEmpty(userId))
             {
                 ViewBag.UserId = userId; // Možeš koristiti ovu vrijednost za prikaz na stranici
+                ViewBag.User = _context.Users.SingleOrDefault(u => u.id == int.Parse(userId));
+                ViewBag.username = ViewBag.User.username;
             }
 
             return View();

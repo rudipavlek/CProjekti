@@ -55,8 +55,9 @@ namespace aspprvi.Controllers
         // Odjava korisnika
         public IActionResult Logout()
         {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("UserId");
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
     }
 }

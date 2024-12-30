@@ -9,10 +9,10 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Postavi vremensko ograničenje za sesiju
     options.Cookie.HttpOnly = true;  // Postavi cookie da bude samo za HTTP (ne za JavaScript)
-    options.Cookie.IsEssential = true; // Oznaka je bitna za GDPR
+    options.Cookie.IsEssential = true; 
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Osigurava da se cookie šalje samo putem HTTPS-a
-    options.Cookie.SameSite = SameSiteMode.Strict; // Sprečava cookie slanje na različite domene
-    options.Cookie.MaxAge = TimeSpan.FromMinutes(30); // Nakon 30 minuta automatski isteče cookie
+    options.Cookie.SameSite = SameSiteMode.Strict; 
+    options.Cookie.MaxAge = TimeSpan.FromMinutes(30); 
 
 
 });
@@ -24,19 +24,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         // Putanja za prijavu (ako korisnik nije prijavljen, bit će preusmjeren na ovu stranicu)
         options.LoginPath = "/Login/Login";
         options.LogoutPath = "/Login/Logout";
+        options.AccessDeniedPath = "/Login/AccessDenied";
 
     });
+
+builder.Services.AddAuthorization();
 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser() // Ovdje se zahtijeva prijava za sve stranice
-        .Build();
-});
+
 
 builder.Services.AddDbContext<UserDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("blogKonekcija")));
@@ -49,6 +47,8 @@ builder.Services.AddDbContext<CommentDBContext>(options =>
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -57,22 +57,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRouting();
 
 app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}");
 
 
 app.MapControllerRoute(

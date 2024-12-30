@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace aspprvi.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly UserDBContext _context;
@@ -14,35 +15,13 @@ namespace aspprvi.Controllers
             _context = context;
         }
 
-        // Provjeri postoji li korisnički cookie prije nego što dozvoliš pristup
-        private bool IsUserAuthenticated()
-        {
-            // Provjeri postoji li cookie s korisničkim ID-om
-            var userId = HttpContext.Session.GetString("UserId");
-
-            if (userId == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        
 
         // Prikaz svih korisnika
         public IActionResult Index()
         {
-            if (IsUserAuthenticated() == false) // Ako korisnik nije prijavljen
-            {
-                return RedirectToAction("Login", "Login"); // Preusmjeri na login stranicu
-            }
-            else
-            {
-                var users = _context.Users.ToList();
-                return View(users);
-            }
-
+            var users = _context.Users.ToList();
+            return View(users);
             
         }
 

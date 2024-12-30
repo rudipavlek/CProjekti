@@ -1,20 +1,101 @@
-﻿@model aspprvi.Models.Blog_Post
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Blog</title>
 
-@{
-    ViewData["Title"] = Model.title;
-}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0G6JzqkK+X6l9IKjZtG1tLxa4gxe0rdwZ8+oPtFfo1yP2Lvp" crossorigin="anonymous" />
 
-<div class="container mt-4">
-    <h1>@Model.title</h1>
-    <p><strong>Created at:</strong> @Model.created_at.ToString("MMMM dd, yyyy")</p>
-    <p><strong>Last updated:</strong> @Model.updated_at.ToString("MMMM dd, yyyy")</p>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
 
-    <div class="mt-4">
-        <p>@Model.content</p>
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+            .btn-warning:hover {
+                background-color: #e0a800;
+                transform: scale(1.05);
+            }
+
+        .btn-red {
+            background-color: #FF4500;
+            color: #212529;
+        }
+
+            .btn-red:hover {
+            background-color: #FF6347;
+                transform: scale(1.05);
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>@Model.title</h1>
+        <p><strong>Created at:</strong> @Model.created_at.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Last updated:</strong> @Model.updated_at.ToString("MMMM dd, yyyy")</p>
+
+        <div class="content">
+            <p>@Model.content</p>
+            <p><strong>Autor:</strong> @Model.user_id</p>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="@Url.Action("Edit", "Blog", new { id = Model.id })" class="btn btn-warning">Edit</a>
+            <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary">Back to Posts</a>
+            <a href="@Url.Action("Delete", "Blog", new { id = Model.id })" class="btn btn-red">Delete</a>
+        </div>
     </div>
 
-    <div class="mt-4">
-        <a href="@Url.Action("Edit", "Blog", new { id = Model.id })" class="btn btn-warning">Edit</a>
-        <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary">Back to Posts</a>
-    </div>
-</div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

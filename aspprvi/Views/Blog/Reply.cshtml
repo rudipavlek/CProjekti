@@ -1,0 +1,23 @@
+﻿@model aspprvi.Models.Blog_Post
+
+@{
+    ViewData["Title"] = "Reply to Post";
+}
+
+<div class="container mt-4">
+    <h1>Reply to Post</h1>
+
+    <form asp-action="Reply" method="post">
+        <input type="hidden" name="blogpost_id" value="@Model.id" />
+
+        <div class="form-group">
+            <label for="content">Your Reply</label>
+            <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Reply</button>
+            <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary ml-2">Cancel</a>
+        </div>
+    </form>
+</div>
