@@ -9,10 +9,14 @@ namespace aspprvi.Controllers
     public class AdminController : Controller
     {
         private readonly UserDBContext _context;
+        private readonly BlogPostDBContext _contextBlogPost;
+        private readonly CommentDBContext _contextComment;
 
-        public AdminController(UserDBContext context)
+        public AdminController(UserDBContext context, BlogPostDBContext contextBlogPost, CommentDBContext contextComment)
         {
             _context = context;
+            _contextBlogPost = contextBlogPost;
+            _contextComment = contextComment;
         }
 
         
@@ -103,11 +107,62 @@ namespace aspprvi.Controllers
         // Brisanje korisnika
         public IActionResult Delete(int id)
         {
+            //Pronadi korisnika
             var user = _context.Users.SingleOrDefault(u => u.id == id);
             if (user == null) return NotFound();
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+
+            ////Pronadi komentare
+            //var comments = _contextComment.Comments.Where(c => c.user_id == id).ToList();
+            //Console.WriteLine($"Found {comments.Count} comments for user with id {id}.");
+
+            //foreach (var comment in comments)
+            //{
+            //    Console.WriteLine($"Comment ID: {comment.id}, Content: {comment.content}");
+
+            //    comment.user_id = 0;
+            //    _contextComment.Comments.Update(comment); // Ažuriraj zapis u bazi
+            //}
+
+            ////Pronadi blogpostove korisnika
+            //var blogPosts = _contextBlogPost.BlogPosts.Where(p => p.user_id==id).ToList();
+            //Console.WriteLine($"Found {blogPosts.Count} blog posts for user with id {id}.");
+
+            //foreach (var post in blogPosts)
+            //{
+            //    Console.WriteLine($"Blog Post ID: {post.id}, Title: {post.title}");
+
+            //    post.user_id = 0;
+            //    _contextBlogPost.BlogPosts.Update(post); // Ažuriraj zapis u bazi
+            //}
+
+            
+
+            //// Ažuriraj promjene u bazi
+            //try
+            //{
+            //    _contextComment.SaveChanges();
+            //    _contextBlogPost.SaveChanges();
+                
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Error while saving changes: {ex.Message}");
+            //    return StatusCode(500, "Internal server error while updating blog posts or comments.");
+            //}
+
+            // Obriši korisnika
+            try
+            {
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+                Console.WriteLine($"User with id {id} deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while deleting user: {ex.Message}");
+                return StatusCode(500, "Internal server error while deleting user.");
+            }
             return RedirectToAction("Index");
         }
     }

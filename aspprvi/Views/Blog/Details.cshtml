@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@model aspprvi.Models.BlogPostDetailsViewModel
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Blog</title>
+    <title>@Model.BlogPost.title - Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0G6JzqkK+X6l9IKjZtG1tLxa4gxe0rdwZ8+oPtFfo1yP2Lvp" crossorigin="anonymous" />
@@ -62,7 +65,7 @@
         }
 
             .btn-red:hover {
-            background-color: #FF6347;
+                background-color: #FF6347;
                 transform: scale(1.05);
             }
 
@@ -79,23 +82,44 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1>@Model.title</h1>
-        <p><strong>Created at:</strong> @Model.created_at.ToString("MMMM dd, yyyy")</p>
-        <p><strong>Last updated:</strong> @Model.updated_at.ToString("MMMM dd, yyyy")</p>
+        <h1>@Model.BlogPost.title</h1>
+        <p><strong>Created at:</strong> @Model.BlogPost.created_at.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Last updated:</strong> @Model.BlogPost.updated_at.ToString("MMMM dd, yyyy")</p>
 
         <div class="content">
-            <p>@Model.content</p>
-            <p><strong>Autor:</strong> @Model.user_id</p>
+            <p>@Model.BlogPost.content</p>
+            <p><strong>Author:</strong> @Model.BlogPost.user_id</p>
         </div>
 
+        
+
+        <!-- Action Buttons -->
         <div class="mt-4 text-center">
-            <a href="@Url.Action("Edit", "Blog", new { id = Model.id })" class="btn btn-warning">Edit</a>
+            <a href="@Url.Action("Edit", "Blog", new { id = Model.BlogPost.id })" class="btn btn-warning">Edit</a>
             <a href="@Url.Action("Index", "Blog")" class="btn btn-secondary">Back to Posts</a>
-            <a href="@Url.Action("Delete", "Blog", new { id = Model.id })" class="btn btn-red">Delete</a>
+            <a href="@Url.Action("Delete", "Blog", new { id = Model.BlogPost.id })" class="btn btn-red">Delete</a>
+        </div>
+
+        <!-- Display Comments -->
+        <div class="mt-4">
+            <h3>Comments</h3>
+            @if (Model.Comments.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item">
+                            <p>@comment.content</p>
+                            <small class="text-muted">Posted by user @comment.user_id on @comment.created_at.ToString("MMMM dd, yyyy")</small>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No comments yet. Be the first to comment!</p>
+            }
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

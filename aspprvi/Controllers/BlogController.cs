@@ -35,7 +35,16 @@ namespace aspprvi.Controllers
             var post = _context.BlogPosts.SingleOrDefault(p => p.id == id);
             if (post == null) return NotFound();
 
-            return View(post);
+            var comments = _contextComment.Comments
+                        .Where(c => c.blogpost_id == id)
+                        .ToList();
+            var viewModel = new BlogPostDetailsViewModel
+            {
+                BlogPost = post,
+                Comments = comments
+            };
+
+            return View(viewModel);
         }
 
         // Odgovor pojedinačnog blog posta
