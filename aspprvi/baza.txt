@@ -1,0 +1,9 @@
+connection string value:
+Data Source=DESKTOP-9BJ0SS7\SQLEXPRESS;Initial Catalog=blog;Integrated Security=True;Encrypt=False
+
+
+connection string name:
+ConnectionStrings:aspprviContext
+
+
+        "aspprviContext": "Server=DESKTOP-9BJ0SS7\\SQLEXPRESS;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true"
